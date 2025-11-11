@@ -16,7 +16,6 @@ Makefile
 /shaders/compiled/
 
 # Temporary files
-*.obj
 *.o
 *.exe
 *.pdb
