@@ -1,0 +1,31 @@
+# Build output directories
+/out/
+/bin/
+CMakeFiles/
+.vs/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.sln
+*.vcxproj*
+*.user
+*.ninja
+*.log
+
+# Compiled shaders
+/shaders/compiled/
+
+# Temporary files
+*.obj
+*.o
+*.exe
+*.pdb
+*.ilk
+*.idb
+*.ipch
+*.iobj
+
+# OS-specific
+Thumbs.db
+.DS_Store
+*.swp

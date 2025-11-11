@@ -1,0 +1,24 @@
+Fix for validation errors regarding renderfinishedSemaphores in SwapChainManager.cpp:
+	- Change renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT); to renderFinishedSemaphores.resize(swapChainImages.size());
+	- Make sure to handle the creation and destruction loops separate from the other sync objects
+	- Index the array with *imageIndex instead of currentFrame
+	
+	
+	
+
+@rafisrakhmankulov9817
+4 years ago
+I don't have an issue such as in the pinned comment but my output log is spammed every frame about CommandBuffer.
+Error text is "Calling VkBeginCommandBuffer() on active VkCommandBuffer before it is completed." and so one.
+I triple check the code and it seams like everything is on par with the diff you provided.
+I use MacBook on M1 chip by the way, everything works great besides this error :D
+
+@BrendanGalea
+4 years ago
+I think I might've come across this once before. To confirm, in the drawFrame() function try printing the imageIndex variable. It should cycle through 0, 1, 2, 0, 1, 2... and so on. But for some reason one other viewer (also on a mac but not an m1), the API would return an image even if it was still in use. So you would get like a 0, 0, 1, 1, 2, 2 pattern. 
+
+The temporary fix would be in the app's run() function, inside the while loop just under the call to drawFrame() add vkDeviceWaitIdle(lveDevice.device());
+
+This will make things slightly less efficient, but in tutorial 11 after we make a frameIndex counter independent of the imageIndex counter that should fix the issue and you can remove the vkDeviceWaitIdle(lveDevice.device()); then. 
+
+Hope that helps! and if that wasn't the problem let me know and I'll see what else I can come up with.
